@@ -1,14 +1,24 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import college from "../../data/college.json";
 import { AppContext } from "../../context/AppContext";
 
 function SignupForm() {
   const navigate = useNavigate();
-  const { updateSignupData, setIsSignup, signupData } = useContext(AppContext);
-  const { formData, setFormData } = useContext(AppContext);
+  const { updateSignupData, setIsSignup, signupData, setsignupData } =
+    useContext(AppContext);
+  const [formData, setFormData] = useState({
+    collegeId: "",
+    collegeName: "",
+    stateName: "",
+    cityName: "",
+    facultyName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -37,11 +47,11 @@ function SignupForm() {
       toast.error("Passwords Do Not Match");
       return;
     }
-    updateSignupData(formData);
-    setIsSignup(true);
-    console.log(signupData);
 
-    navigate("/verify-email");
+    setFormData(formData); // Wait for the data to be updated
+    setIsSignup(true);
+    // navigate("/verify-email");
+    navigate("/verify-email", { state: { formData } });
   };
 
   return (
@@ -149,7 +159,7 @@ function SignupForm() {
           </p>
           <input
             required
-            type="email"
+            type="text"
             name="email"
             value={email}
             onChange={handleOnChange}

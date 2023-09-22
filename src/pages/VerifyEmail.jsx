@@ -5,26 +5,28 @@ import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import { useLocation } from "react-router-dom";
 
 function VerifyEmail() {
   const { loading } = useContext(AppContext);
   const { signupData, setsignupData } = useContext(AppContext);
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const formData = location.state?.formData || {};
+  const [newSignupData, setNewSignupData] = useState(formData);
 
   useEffect(() => {
-    if (!signupData) {
-      navigate("/signup");
-    }
-  }, []);
+    if (formData != newSignupData) console.log(newSignupData);
+  }, [newSignupData]);
 
-  const handleVerifyAndSignup = (e) => {
+  const handleVerifyAndSignup = async (e) => {
     e.preventDefault();
-    setsignupData({
-      ...signupData,
+
+    setNewSignupData({
+      ...newSignupData,
       otp: otp,
     });
-    console.log("Printing object with otp",signupData);
   };
 
   return (

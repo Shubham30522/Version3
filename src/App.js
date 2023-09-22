@@ -12,16 +12,18 @@ import PrivateRoute from "./components/core/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
+import Error from "./pages/Error"
 function App() {
   const { isSignup } = useContext(AppContext);
   return (
-    <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
+    <div className="w-screen min-h-screen bg-richblack-800 flex flex-col font-inter">
       <Navbar />
       <Routes>
         <Route index element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="signup" element={<SignupForm />} />
         <Route path="login" element={<LoginForm />} />
+        <Route path="*" element={<Error />} />
 
         <Route path="forgot-password" element={<ForgotPassword />} />
 
