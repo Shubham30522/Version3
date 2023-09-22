@@ -8,7 +8,7 @@ import { AppContext } from "../context/AppContext";
 
 function VerifyEmail() {
   const { loading } = useContext(AppContext);
-  const { signupData } = useContext(AppContext);
+  const { signupData, setsignupData } = useContext(AppContext);
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
@@ -20,7 +20,11 @@ function VerifyEmail() {
 
   const handleVerifyAndSignup = (e) => {
     e.preventDefault();
-    const {} = signupData;
+    setsignupData({
+      ...signupData,
+      otp: otp,
+    });
+    console.log("Printing object with otp",signupData);
   };
 
   return (
@@ -39,6 +43,7 @@ function VerifyEmail() {
           </p>
           <form onSubmit={handleVerifyAndSignup}>
             <OtpInput
+              name="otp"
               value={otp}
               onChange={setOtp}
               numInputs={6}
@@ -60,7 +65,6 @@ function VerifyEmail() {
             <button
               type="submit"
               className="w-full bg-yellow-50 py-[12px] px-[12px] rounded-[8px] mt-6 font-medium text-richblack-900"
-              // onClick={console.log(otp)}
             >
               Verify Email
             </button>

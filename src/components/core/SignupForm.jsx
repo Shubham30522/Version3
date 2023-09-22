@@ -7,7 +7,7 @@ import { AppContext } from "../../context/AppContext";
 
 function SignupForm() {
   const navigate = useNavigate();
-  const { updateSignupData, setIsSignup } = useContext(AppContext);
+  const { updateSignupData, setIsSignup, signupData } = useContext(AppContext);
   const { formData, setFormData } = useContext(AppContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -39,6 +39,8 @@ function SignupForm() {
     }
     updateSignupData(formData);
     setIsSignup(true);
+    console.log(signupData);
+
     navigate("/verify-email");
   };
 
